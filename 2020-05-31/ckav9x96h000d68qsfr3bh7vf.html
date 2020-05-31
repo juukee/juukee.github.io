@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Juukee的博客,juukee,Juukee,python,java,go,php,ts,vue">
+  <meta name="author" content="Juukee">
+  <meta name="keywords" content="Juukee的博客,juukee,Juukee,python,java,go,php,ts,vue">
+  <title>Docker菜鸟初级篇---安装 - 火柴哥</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>火柴哥</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="iconfont icon-home-fill"></i>
+              首页</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">
+              <i class="iconfont icon-archive-fill"></i>
+              归档</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">
+              <i class="iconfont icon-category-fill"></i>
+              分类</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">
+              <i class="iconfont icon-tags-fill"></i>
+              标签</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">
+              <i class="iconfont icon-user-fill"></i>
+              关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://rmt.dogedoge.com/fetch/juukee/storage/demo/banner.jpg?w=1280&mode=clip&fmt=webp&pos=auto') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <div class="mt-3 post-meta">
+                  <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+                  <time datetime="2020-05-31 22:36">
+                    2020-05-31 10:36:39 星期日
+                  </time>
+                </div>
+              
+
+              <div class="mt-1">
+                
+                  
+                  <span class="post-meta mr-2">
+                    <i class="iconfont icon-chart"></i>
+                    1.6k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta mr-2">
+                      <i class="iconfont icon-clock-fill"></i>
+                    
+                    
+                    22
+                     分钟
+                  </span>
+                
+
+                
+              </div>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2020-05-31 10:53:31 星期日
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p><img src="https://mmbiz.qpic.cn/mmbiz_gif/6aVaON9Kibf5ibKRPQgZ9XgbVNsIeQUnfKy4ia9OoKXgFWC78shRtzFR8icyLGazjnMGfyME6zwiadltkTakg8V0icag/640?" srcset="/img/loading.gif" alt=""></p>
+<p>任何一个工具，它的一个最重要的、同时也是最难以做到的方面就是对那些学习使用这个工具的人在使用习惯上的影响。如果这个工具是一种编程语言，那么，这种影响——不管我们是否喜欢——将是一种思考习惯上的影响。</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_gif/yIGVCsrQyYJHvJUMS22qwaDJM2sbtdjc8SdOkeT47kLx1b7j1Xsco5KgiarichObx7dCgiaLdjDjcPvYdoFKob6WQ/640" srcset="/img/loading.gif" alt=""></p>
+<p>正文共：4875字 11图预计阅读时间：13分钟</p>
+<pre><code>Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。    Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。    容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。    Docker 从 17.03 版本之后分为 CE（Community Edition: 社区版） 和 EE（Enterprise Edition: 企业版），我们用社区版就可以了。  </code></pre><p><strong>1</strong></p>
+<p>Docker 安装</p>
+<p>1</p>
+<p>使用官方安装脚本自动安装 （仅适用于公网环境）  </p>
+<p>系统环境为：Centos  7.7 64位，至于为什么不用centos8，是因为新版本系统方面的兼容还没有那么完善，做为服务而言必须使用稳定一点的系统。  </p>
+<pre><code class="hljs nginx"><span class="hljs-attribute">curl</span> -fsSL https://get.docker.com | bash -s docker --mirror Aliyun</code></pre>
+
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/9CWbA1ycFXfDT2U365wpgU68vO6ZpiaTvxOREoAhnCCUmAicbYSFJ6s8N1lDPUD3Ibt5CS3azud03dCHaURlYicrg/640?wx_fmt=png" srcset="/img/loading.gif" alt="">)<img src="https://mmbiz.qpic.cn/mmbiz_png/9CWbA1ycFXfDT2U365wpgU68vO6ZpiaTvAIWrl7LeomgNNEWg89Hbhz7bKC0aQzvuicQKyOqhRf4gAx4wQjFRZrg/640?wx_fmt=png" srcset="/img/loading.gif" alt="">)<img src="https://mmbiz.qpic.cn/mmbiz_png/9CWbA1ycFXfDT2U365wpgU68vO6ZpiaTvwS0GqUnjUeJ0O4uGPWNpQ14jQGNd3W7iaQAEx0zuriaDDcKdMlHGyXQA/640?wx_fmt=png" srcset="/img/loading.gif" alt=""><br>提示安装成功，但是会提醒你使用非Root管理员去运行docker  </p>
+<p>02</p>
+<p>手动安装帮助 (阿里云ECS可以通过内网安装，见注释部分内容)</p>
+<h2 id="01-Ubuntu-14-04-16-04-使用apt-get进行安装"><a href="#01-Ubuntu-14-04-16-04-使用apt-get进行安装" class="headerlink" title="01 - Ubuntu 14.04 16.04 (使用apt-get进行安装)"></a>01 - Ubuntu 14.04 16.04 (使用apt-get进行安装)</h2><pre><code class="hljs sql"><span class="hljs-comment"># step 1: 安装必要的一些系统工具</span>
+sudo apt-get <span class="hljs-keyword">update</span>
+sudo apt-<span class="hljs-keyword">get</span> -y <span class="hljs-keyword">install</span> apt-transport-https ca-certificates curl software-properties-common
+<span class="hljs-comment"># step 2: 安装GPG证书</span>
+curl -fsSL <span class="hljs-keyword">http</span>://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-<span class="hljs-keyword">key</span> <span class="hljs-keyword">add</span> -
+<span class="hljs-comment"># Step 3: 写入软件源信息</span>
+sudo <span class="hljs-keyword">add</span>-apt-repository <span class="hljs-string">"deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"</span>
+<span class="hljs-comment"># Step 4: 更新并安装 Docker-CE</span>
+sudo apt-<span class="hljs-keyword">get</span> -y <span class="hljs-keyword">update</span>
+sudo apt-<span class="hljs-keyword">get</span> -y <span class="hljs-keyword">install</span> docker-ce
+
+注意：其他注意事项在下面的注释中
+<span class="hljs-comment"># 安装指定版本的Docker-CE:</span>
+<span class="hljs-comment"># Step 1: 查找Docker-CE的版本:</span>
+<span class="hljs-comment"># apt-cache madison docker-ce</span>
+<span class="hljs-comment">#   docker-ce | 17.03.1~ce-0~ubuntu-xenial | http://mirrors.aliyun.com/docker-ce/linux/ubuntu xenial/stable amd64 Packages</span>
+<span class="hljs-comment">#   docker-ce | 17.03.0~ce-0~ubuntu-xenial | http://mirrors.aliyun.com/docker-ce/linux/ubuntu xenial/stable amd64 Packages</span>
+<span class="hljs-comment"># Step 2: 安装指定版本的Docker-CE: (VERSION 例如上面的 17.03.1~ce-0~ubuntu-xenial)</span>
+<span class="hljs-comment"># sudo apt-get -y install docker-ce=[VERSION]</span>
+
+<span class="hljs-comment"># 通过经典网络、VPC网络内网安装时，用以下命令替换Step 2、Step 3中的命令</span>
+<span class="hljs-comment"># 经典网络：</span>
+<span class="hljs-comment"># curl -fsSL http://mirrors.aliyuncs.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -</span>
+<span class="hljs-comment"># sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyuncs.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"</span>
+<span class="hljs-comment"># VPC网络：</span>
+<span class="hljs-comment"># curl -fsSL http://mirrors.cloud.aliyuncs.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -</span>
+<span class="hljs-comment"># sudo add-apt-repository "deb [arch=amd64] http://mirrors.cloud.aliyuncs.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"</span></code></pre>
+
+
+
+<h2 id="02-CentOS-7-使用yum进行安装"><a href="#02-CentOS-7-使用yum进行安装" class="headerlink" title="02 - CentOS 7 (使用yum进行安装)"></a>02 - CentOS 7 (使用yum进行安装)</h2><pre><code class="hljs sql"><span class="hljs-comment"># step 1: 安装必要的一些系统工具</span>
+sudo yum <span class="hljs-keyword">install</span> -y yum-utils device-mapper-persistent-<span class="hljs-keyword">data</span> lvm2
+<span class="hljs-comment"># Step 2: 添加软件源信息</span>
+sudo yum-config-manager <span class="hljs-comment">--add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span>
+<span class="hljs-comment"># Step 3: 更新并安装 Docker-CE</span>
+sudo yum makecache <span class="hljs-keyword">fast</span>
+sudo yum -y <span class="hljs-keyword">install</span> docker-ce
+<span class="hljs-comment"># Step 4: 开启Docker服务</span>
+sudo service docker <span class="hljs-keyword">start</span>
+
+注意：其他注意事项在下面的注释中
+<span class="hljs-comment"># 官方软件源默认启用了最新的软件，您可以通过编辑软件源的方式获取各个版本的软件包。例如官方并没有将测试版本的软件源置为可用，你可以通过以下方式开启。同理可以开启各种测试版本等。</span>
+<span class="hljs-comment"># vim /etc/yum.repos.d/docker-ce.repo</span>
+<span class="hljs-comment">#   将 [docker-ce-test] 下方的 enabled=0 修改为 enabled=1</span>
+<span class="hljs-comment">#</span>
+<span class="hljs-comment"># 安装指定版本的Docker-CE:</span>
+<span class="hljs-comment"># Step 1: 查找Docker-CE的版本:</span>
+<span class="hljs-comment"># yum list docker-ce.x86_64 --showduplicates | sort -r</span>
+<span class="hljs-comment">#   Loading mirror speeds from cached hostfile</span>
+<span class="hljs-comment">#   Loaded plugins: branch, fastestmirror, langpacks</span>
+<span class="hljs-comment">#   docker-ce.x86_64            17.03.1.ce-1.el7.centos            docker-ce-stable</span>
+<span class="hljs-comment">#   docker-ce.x86_64            17.03.1.ce-1.el7.centos            @docker-ce-stable</span>
+<span class="hljs-comment">#   docker-ce.x86_64            17.03.0.ce-1.el7.centos            docker-ce-stable</span>
+<span class="hljs-comment">#   Available Packages</span>
+<span class="hljs-comment"># Step2 : 安装指定版本的Docker-CE: (VERSION 例如上面的 17.03.0.ce.1-1.el7.centos)</span>
+<span class="hljs-comment"># sudo yum -y install docker-ce-[VERSION]</span>
+<span class="hljs-comment"># 注意：在某些版本之后，docker-ce安装出现了其他依赖包，如果安装失败的话请关注错误信息。例如 docker-ce 17.03 之后，需要先安装 docker-ce-selinux。</span>
+<span class="hljs-comment"># yum list docker-ce-selinux- --showduplicates | sort -r</span>
+<span class="hljs-comment"># sudo yum -y install docker-ce-selinux-[VERSION]</span>
+
+<span class="hljs-comment"># 通过经典网络、VPC网络内网安装时，用以下命令替换Step 2中的命令</span>
+<span class="hljs-comment"># 经典网络：</span>
+<span class="hljs-comment"># sudo yum-config-manager --add-repo http://mirrors.aliyuncs.com/docker-ce/linux/centos/docker-ce.repo</span>
+<span class="hljs-comment"># VPC网络：</span>
+<span class="hljs-comment"># sudo yum-config-manager --add-repo http://mirrors.could.aliyuncs.com/docker-ce/linux/centos/docker-ce.repo</span></code></pre>
+
+<h2 id="安装校验"><a href="#安装校验" class="headerlink" title="安装校验"></a>安装校验</h2><pre><code class="hljs nginx"><span class="hljs-attribute">docker</span> version
+<span class="hljs-comment"># 如果只想输出docker版本信息</span>
+docker -v  <span class="hljs-comment"># 或者用 docker --version</span></code></pre>
+
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/9CWbA1ycFXfDT2U365wpgU68vO6ZpiaTvIPMWE1YJQXNA2PUCHUEC39tSM2SNtc981TmWmHfTra8nBttAGIlP5g/640?wx_fmt=png" srcset="/img/loading.gif" alt="">这个提示是还没有启动docker后台进程  </p>
+<pre><code class="hljs properties"><span class="hljs-attr">sudo</span> <span class="hljs-string">systemctl daemon-reload</span>
+<span class="hljs-attr">sudo</span> <span class="hljs-string">systemctl restart docker</span></code></pre>
+
+<p>重新运行如下：<img src="https://mmbiz.qpic.cn/mmbiz_png/9CWbA1ycFXfDT2U365wpgU68vO6ZpiaTvu4UegujPhJD5n8OvYVAbMn4eAztsiaK13WxO3wWZAChkAjcBia36J3QQ/640?wx_fmt=png" srcset="/img/loading.gif" alt="">  </p>
+<p><strong>2</strong></p>
+<p>Docker 加速器</p>
+<p>针对Docker客户端版本大于 1.10.0 的用户您可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器，下面这个是我自己阿里云的加速器地址，可以替换为自己的。<img src="https://mmbiz.qpic.cn/mmbiz_png/9CWbA1ycFXfDT2U365wpgU68vO6ZpiaTvbO3OGZbpYhichSZhRysjyBPcYQIHm71rAOM9gqOFCuaNEyA9ueg6JcQ/640?wx_fmt=png" srcset="/img/loading.gif" alt=""></p>
+<pre><code class="hljs perl">sudo <span class="hljs-keyword">mkdir</span> -p /etc/docker
+sudo tee /etc/docker/daemon.json &lt;&lt;-<span class="hljs-string">'EOF'</span>
+&#123;
+  <span class="hljs-string">"registry-mirrors"</span>: [<span class="hljs-string">"https://g0p1kah0.mirror.aliyuncs.com"</span>]
+&#125;
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker</code></pre>
+
+
+
+<p>3  </p>
+<p>Docker-Compose  </p>
+<pre><code>Docker Compose是 docker 提供的一个命令行工具，用来定义和运行由多个容器组成的应用。使用 compose，我们可以通过 YAML 文件声明式的定义应用程序的各个服务，并由单个命令完成应用的创建和启动。    Docker Compose 存放在Git Hub，不太稳定。  
+你可以也通过执行下面的命令，高速安装Docker Compose。</code></pre><pre><code class="hljs ruby">curl -L <span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/get.daocloud.io/docker</span><span class="hljs-regexp">/compose/releases</span><span class="hljs-regexp">/download/</span><span class="hljs-number">1.25</span>.<span class="hljs-number">4</span>/docker-compose-<span class="hljs-string">`uname -s`</span>-<span class="hljs-string">`uname -m`</span> &gt; <span class="hljs-regexp">/usr/local</span><span class="hljs-regexp">/bin/docker</span>-compose
+chmod +x /usr/local/bin/docker-compose</code></pre>
+
+<p>你可以通过修改URL中的版本，可以自定义您的需要的版本。  </p>
+<p><strong>4</strong></p>
+<p>卸载 Docker</p>
+<p>  Ubuntu|Debian</p>
+<pre><code class="hljs cs">sudo apt-<span class="hljs-keyword">get</span> <span class="hljs-keyword">remove</span> docker docker-engine</code></pre>
+
+
+
+
+
+
+
+
+
+<p>RHEL|CentOS</p>
+<pre><code class="hljs properties"><span class="hljs-attr">sudo</span> <span class="hljs-string">yum remove docker \</span>
+<span class="hljs-meta">docker-common</span> <span class="hljs-string">\</span>
+<span class="hljs-meta">container-selinux</span> <span class="hljs-string">\</span>
+<span class="hljs-meta">docker-selinux</span> <span class="hljs-string">\</span>
+<span class="hljs-attr">docker-engine</span></code></pre>
+
+<p>Fedora</p>
+<pre><code class="hljs properties"><span class="hljs-attr">sudo</span> <span class="hljs-string">dnf remove docker \</span>
+<span class="hljs-meta">docker-common</span> <span class="hljs-string">\</span>
+<span class="hljs-meta">container-selinux</span> <span class="hljs-string">\</span>
+<span class="hljs-meta">docker-selinux</span> <span class="hljs-string">\</span>
+<span class="hljs-attr">docker-engine</span></code></pre>
+
+<p>卸载Docker后,/var/lib/docker/目录下会保留原Docker的镜像,网络,存储卷等文件. 如果需要全新安装Docker,需要删除/var/lib/docker/目录</p>
+<pre><code class="hljs javascript">rm -fr /<span class="hljs-keyword">var</span>/lib/docker/</code></pre>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/IBnQicdia1GV6KnlBZps4t7Jkib94H4cVRQZZZPmvrunrENrQugdyEFkxuibnlThicwxcqNoHKm09FKjen5FLOfa6vA/640" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/9CWbA1ycFXcWpaIW71xMhFEBFMkgmSsBgZBq28OibnPhFdKUcODee5gsBDEAGLQZN6icP2SO0SDMVMdfNic95tyLA/640?wx_fmt=jpeg" srcset="/img/loading.gif" alt=""></p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/docker/">docker</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/docker/">docker</a>
+                    
+                      <a class="hover-with-bg" href="/tags/docker%E6%95%99%E7%A8%8B/">docker教程</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+                    
+                      <a class="hover-with-bg" href="/tags/docker%E5%AE%89%E8%A3%85/">docker安装</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020-05-31/ckav9x95u000168qs2239hrjf.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">程序员的噩梦，你遇到过哪几条？</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020-05-31/ckav9x96v000o68qs1oio28l8.html">
+                        <span class="hidden-mobile">Docker傻瓜教程--镜像篇！看了这篇教程还学不会！那我也没办法了！</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='https://blog.juukee.cn/2020-05-31/ckav9x96h000d68qsfr3bh7vf.html'></div>
+  <script type="text/javascript">
+  (function() {
+    var appid = 'cyuzwVoSB';
+    var conf = '';
+    var width = window.innerWidth || document.documentElement.clientWidth;
+    if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+    } else {
+      var loadJs = function(d, a) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function() {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+      loadJs("http://changyan.sohu.com/upload/changyan.js",
+      function() {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    }
+  })();
+  </script>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+  <!-- 备案信息 -->
+  <div>
+    <a href="http://beian.miit.gov.cn/" target="_blank" class="beian-icp"
+       rel="nofollow noopener">粤ICP备19154293号-1</a>
+    
+      <a
+        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12345678"
+        rel="nofollow noopener"
+        class="beian-police"
+        target="_blank"
+      >
+        <span class="beian-police-sep">&nbsp;|&nbsp;</span>
+        
+          <img src="/img/police_beian.png" srcset="/img/loading.gif" alt="police-icon" />
+        
+        <span>京公网安备12345678号</span>
+      </a>
+     
+  </div>
+
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+    <!-- Tencent Analytics -->
+    <script defer>
+      var _mtac = {};
+      (function () {
+        var mta = document.createElement("script");
+        mta.src = "//pingjs.qq.com/h5/stats.js?v2.0.4";
+        mta.setAttribute("name", "MTAH5");
+        mta.setAttribute("sid", "500712923");
+        
+        mta.setAttribute("cid", "500714552");
+        
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(mta, s);
+      })();
+    </script>
+  
+
+  
+    <!-- tajs Analytics -->
+    <script defer type="text/javascript" src="//tajs.qq.com/stats?sId=66529173" charset="UTF-8"></script>
+  
+
+  
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Docker菜鸟初级篇---安装&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
